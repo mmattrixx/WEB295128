@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}WOK ECT{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/css/jquery-ui.css') }}">
+    {% endblock %}
+    <script src="{{ asset('build/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('build/js/popper.min.js') }}"></script>
+    <script src="{{ asset('build/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('build/js/jquery-ui.js') }}"></script>
+
+</head>
+<body>
+{% block body %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{{ path('Wszystkie_pomiaryT200') }}">WOK ECT </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    {% if is_granted('ROLE_ONLYSHOW') %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Pomiary
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ path('Wszystkie_pomiary') }}">Wszystkie Pomiary</a>
+                                <a class="dropdown-item" href="{{ path('searchEtc') }}">Wyszukaj</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ path('Wszystkie_pomiaryT200') }}">Top 200</a>
+                            </div>
+                        </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_MODERATOR') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('tekturatektura') }}">Tektury</a>
+                        </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_MODERATOR') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('papierlista') }}">Papiery</a>
+                        </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_MODERATOR') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('Nowy_pomiar') }}">Nowy Pomiar</a>
+                        </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('users_list') }}">Edycja Użytkowników</a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('security_logout') }}">Wyloguj</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('security_login') }}">Zaloguj</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+
+    </nav>
+
+    {% block cont %}
+
+    {% endblock %}
+{% endblock %}
+{% block javascripts %}{% endblock %}
+</body>
+</html>

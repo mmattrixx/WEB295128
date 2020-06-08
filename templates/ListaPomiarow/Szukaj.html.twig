@@ -1,0 +1,224 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Szukaj
+{% endblock %}
+
+{% block cont %}
+    <script>
+        $(document).ready(function () {
+            $('.btn-operation').on('click', function () {
+                var num = $(this).attr('data-id');
+                var actOper = $('#oper' + num).val();
+                if (actOper == "=") {
+                    $('#oper' + num).val("!=");
+                    $(this).html("!=");
+                } else if (actOper == "!=") {
+                    $('#oper' + num).val(">");
+                    $(this).html(">");
+                } else if (actOper == ">") {
+                    $('#oper' + num).val("<");
+                    $(this).html("<");
+                } else if (actOper == "<") {
+                    $('#oper' + num).val(">=");
+                    $(this).html(">=");
+                } else if (actOper == ">=") {
+                    $('#oper' + num).val("<=");
+                    $(this).html("<=");
+                } else if (actOper == "<=") {
+                    $('#oper' + num).val("=");
+                    $(this).html("=");
+                }
+            })
+        });
+    </script>
+    <script>
+        jQuery(function($){
+            $.datepicker.regional['pl'] = {
+                closeText: 'Zamknij',
+                prevText: '&#x3C;Poprzedni',
+                nextText: 'Następny&#x3E;',
+                currentText: 'Dziś',
+                monthNames: ['Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec',
+                    'Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień'],
+                monthNamesShort: ['Sty','Lu','Mar','Kw','Maj','Cze',
+                    'Lip','Sie','Wrz','Pa','Lis','Gru'],
+                dayNames: ['Niedziela','Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota'],
+                dayNamesShort: ['Nie','Pn','Wt','Śr','Czw','Pt','So'],
+                dayNamesMin: ['N','Pn','Wt','Śr','Cz','Pt','So'],
+                weekHeader: 'Tydz',
+                dateFormat: 'dd.mm.yy',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: ''};
+            $.datepicker.setDefaults($.datepicker.regional['pl']);
+        });
+        $( function() {
+            $( "#datepickerFrom" ).datepicker();
+            $( "#datepickerFrom" ).datepicker( "option", "dateFormat", 'yy-mm-dd');
+            $( "#datepickerTo" ).datepicker();
+            $( "#datepickerTo" ).datepicker( "option", "dateFormat", 'yy-mm-dd');
+            $('#datepickerFrom').datepicker('setDate', 'today');
+            $('#datepickerTo').datepicker('setDate', 'today');
+        } );
+    </script>
+    <div class="container">
+        <h2>Wyszukiwanie Pomiarów
+            {% if hideFilter %}
+            {% set srednia=0 %}
+            {% set sredniaWilgotnosc=0 %}
+            {% for pr in prod %}
+                {% set sredniaWilgotnosc=sredniaWilgotnosc+pr.getWilgotnoscMierzona %}
+                {% set srednia=srednia+pr.ectavg*10 %}
+            {% endfor %} {% if hideFilter %}<button class="btn btn-outline-info" onclick="$('#formFilter').toggle();">Szukaj Następne</button>{% endif %} </h2>
+        <h4>
+            Średnia-ECT:{% if prod|length>0 %}{{ (srednia/prod|length)|round }}{% else %}0{% endif %}
+            -Wilgotnosc:{% if prod|length>0 %}{{ (sredniaWilgotnosc/prod|length)|round }}{% else %}0{% endif %}
+            {% endif %}
+           </h4>
+        <form id="formFilter" method="post" action="{{ path('searchEtc') }}" style="display: {% if hideFilter %}none {% else %}block {% endif %}">
+            <input type="hidden" name="token" value="{{ csrf_token('searchToken') }}"/>
+            <div class="row">
+                    <div class="col-md-5">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Tektura </span>
+                            </div>
+                            <select name="tektura" class="form-control">
+                                <option value="">Wszystkie</option>
+                                {% for tektura in tektury %}
+                                    <option value="{{ tektura.id }}">{{ tektura.nazwa }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                <div class="col-md-5">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Pokrycie 1 </span>
+                        </div>
+                        <select name="pokrycie1" class="form-control">
+                            <option value="">Wszystkie</option>
+                            {% for papier in papiery %}
+                                <option value="{{ papier.id }}">{{ papier.nazwa }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Fala 1</span>
+                        </div>
+                        <select name="fala1" class="form-control">
+                            <option value="">Wszystkie</option>
+                            {% for papier in papiery %}
+                                <option value="{{ papier.id }}">{{ papier.nazwa }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Pokrycie 2 </span>
+                        </div>
+                        <select name="pokrycie2" class="form-control">
+                            <option value="">Wszystkie</option>
+                            {% for papier in papiery %}
+                                <option value="{{ papier.id }}">{{ papier.nazwa }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Fala 2</span>
+                        </div>
+                        <select name="fala2" class="form-control">
+                            <option value="">Wszystkie</option>
+                            {% for papier in papiery %}
+                                <option value="{{ papier.id }}">{{ papier.nazwa }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Pokrycie 3 </span>
+                        </div>
+                        <select name="pokrycie3" class="form-control">
+                            <option value="">Wszystkie</option>
+                            {% for papier in papiery %}
+                                <option value="{{ papier.id }}">{{ papier.nazwa }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Od Daty</span>
+                        </div>
+                        <input value="{{ "now"|date('Y-m-d') }}" type="text" class="form-control" id="datepickerFrom" name="fromdate">
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Do Daty</span>
+                        </div>
+                        <input value="{{ "now"|date('Y-m-d') }}" type="text" class="form-control" id="datepickerTo" name="todate">
+                    </div>
+                </div>
+                {% for find in findForm %}
+                    <div class="col-md-5">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">{{ find }}</span>
+                                <button class="btn btn-outline-secondary btn-operation" data-id="{{ loop.index }}"
+                                        type="button">=
+                                </button>
+                                <input type="hidden" name="oper{{ loop.index }}" id="oper{{ loop.index }}" value="=">
+                            </div>
+                            <input type="{% if loop.index==7 %}text{%else%}number{% endif %}" step="0.1" name="val{{ loop.index }}" class="form-control"
+                                   placeholder="" aria-label="">
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="col-md-5">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Wprowadzający </span>
+                        </div>
+                        <select name="userInsert" class="form-control">
+                            <option value="">Wszyscy</option>
+                            {% for userinsert in users %}
+                                <option value="{{ userinsert.id }}">{{ userinsert.getFullName }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="input-group mb-3">
+
+                        <input type="submit" class="btn btn-outline-success" value="Szukaj" style="width: 100%">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    {% if hideFilter %}
+        {% include 'ListaPomiarow/ListaPomiarow.html.twig' %}
+    {% endif %}
+
+
+{% endblock %}
+

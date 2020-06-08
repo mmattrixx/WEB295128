@@ -1,0 +1,181 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    Edycja
+{% endblock %}
+{% block cont %}
+    <div class="container">
+
+        <form action="{{ url('pomiary_edycja', { id: pomiar.id }) }}" method="post" >
+
+                {# the argument of csrf_token() is an arbitrary string used to generate the token #}
+                <input type="hidden" name="token" value="{{ csrf_token('edit-item') }}"/>
+                <div class="row">  <div class="col-md-4"> <label>Wykonał</label>
+                    <input disabled class="form-control" value="{{ pomiar.user.username }}">
+                    </div></div>
+
+
+
+                <div class="row"> <div class="col-md-4" ><label >Data Wykonania</label>
+                    <input disabled class="form-control" value="{{ pomiar.dataWykonania|date('Y-m-d') }}">
+                    </div></div>
+                <div class="row">  <div class="col-md-4"> <label >Pokrycie 1</label>
+                    <select name="pokrycie1" class="form-control">
+                        {% for papier   in papiery %}
+                        {% if pomiar.pokrycie1 is not null  %}
+                            {% if papier.id==pomiar.pokrycie1.id %}
+                                <option selected value="{{ papier.id }}">{{ papier.nazwa }} {{ papier.producent }}</option>
+                            {% else %}
+                                <option value="{{ papier.id }}">{{ papier.nazwa }} {{ papier.producent }}</option>
+                            {% endif %}
+                        {% else %}
+                            <option value="{{ papier.id }}">{{ papier.nazwa }} {{ papier.producent }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                    </div></div>
+
+                <div class="row"> <div class="col-md-4"> <label >Fala 1</label>
+                    <select name="fala1" class="form-control">
+                        {% for papier   in papiery %}
+                        {% if pomiar.fala1 is not null %}
+                            {% if papier.id==pomiar.fala1.id %}
+                                <option selected value="{{ papier.id }}">{{ papier.nazwa }} {{ papier.producent }}</option>
+                            {% else %}
+                                <option value="{{ papier.id }}">{{ papier.nazwa }} {{ papier.producent }}</option>
+                            {% endif %}
+                        {% else %}
+                            <option value="{{ papier.id }}">{{ papier.nazwa }} {{ papier.producent }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                    </div></div>
+
+                <div class="row">  <div class="col-md-4"> <label >Pokrycie 2</label>
+                    <select name="pokrycie2" class="form-control">
+                        {% for papier   in papiery %}
+                        {% if pomiar.pokrycie2 is not null %}
+                            {% if papier.id==pomiar.pokrycie2.id %}
+                                <option selected value="{{ papier.id }}">{{ papier.nazwa }} {{ papier.producent }}</option>
+                            {% else %}
+                                <option value="{{ papier.id }}">{{ papier.nazwa }} {{ papier.producent }}</option>
+                            {% endif %}
+                        {% else %}
+                            <option value="{{ papier.id }}">{{ papier.nazwa }} {{ papier.producent }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                    </div></div>
+
+                <div class="row">  <div class="col-md-4"> <label >Fala 2</label>
+                    <select name="fala2" class="form-control">
+                        {% for papier   in papiery %}
+                        {% if pomiar.fala2 is not null %}
+                            {% if papier.id==pomiar.fala2.id %}
+                                <option selected value="{{ papier.id }}">{{ papier.nazwa }} {{ papier.producent }}</option>
+                            {% else %}
+                                <option value="{{ papier.id }}">{{ papier.nazwa }} {{ papier.producent }}</option>
+                            {% endif %}
+                        {% else %}
+                            <option value="{{ papier.id }}">{{ papier.nazwa }} {{ papier.producent }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                    </div></div>
+
+                <div class="row"> <div class="col-md-4"> <label >Pokrycie 3</label>
+                    <select name="pokrycie3" class="form-control">
+                        {% for papier   in papiery %}
+                        {% if pomiar.pokrycie3 is not null %}
+                            {% if papier.id==pomiar.pokrycie3.id %}
+                                <option selected value="{{ papier.id }}">{{ papier.nazwa }} {{ papier.producent }}</option>
+                            {% else %}
+                                <option value="{{ papier.id }}">{{ papier.nazwa }} {{ papier.producent }}</option>
+                            {% endif %}
+                        {% else %}
+                            <option value="{{ papier.id }}">{{ papier.nazwa }} {{ papier.producent }}</option>
+                        {% endif %}
+                        {% endfor %}
+
+                    </select>
+                    </div></div>
+
+                <div class="row"> <div class="col-md-4"> <label>Tektura</label>
+                    <select name="tektura" class="form-control">
+                        {% for tektura in tektury %}
+                            {% if pomiar.tektura is not null %}
+                            {% if pomiar.tektura and  tektura.id==pomiar.tektura.id %}
+                                <option selected value="{{ tektura.id }}">{{ tektura.nazwa }}</option>
+                            {% else %}
+                                <option value="{{ tektura.id }}">{{ tektura.nazwa }}</option>
+                            {% endif %}
+                                {% else %}
+                                    <option value="{{ tektura.id }}">{{ tektura.nazwa }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    </div></div>
+
+
+
+
+                <div class="row"> <div class="col-md-4"> <label >Pomiar 1</label>
+                    <input disabled class="form-control" value="{{ pomiar.pomiar1 }}">
+                    </div></div>
+                <div class="row"> <div class="col-md-4">
+                    <label >Pomiar 2</label>
+                    <input disabled class="form-control" value="{{ pomiar.pomiar2 }}">
+                    </div></div>
+                <div class="row"> <div class="col-md-4"> <label >Pomiar 3</label>
+                    <input disabled class="form-control" value="{{ pomiar.pomiar3 }}">
+                    </div></div>
+                <div class="row"> <div class="col-md-4"> <label >Pomiar 4</label>
+                    <input disabled class="form-control" value="{{ pomiar.pomiar4 }}">
+                    </div></div>
+                <div class="row"> <div class="col-md-4"> <label >Pomiar 5</label>
+                    <input disabled class="form-control" value="{{ pomiar.pomiar5 }}">
+                    </div></div>
+                <div class="row"> <div class="col-md-4"> <label >ECT Max</label>
+                    <input disabled class="form-control" value="{{ pomiar.ectMax }}">
+                    </div></div>
+                <div class="row"> <div class="col-md-4"> <label >ECT MIN</label>
+                    <input disabled class="form-control" value="{{ pomiar.ectMin }}">
+                    </div></div>
+                <div class="row"> <div class="col-md-4"> <label >ECT Średnia</label>
+                    <input disabled class="form-control" value="{{ pomiar.ectAvg }}">
+                    </div></div>
+                <div class="row"> <div class="col-md-4"> <label >Odchylenie Standardowe</label>
+                    <input disabled class="form-control" value="{{ pomiar.standardDeviation }}">
+                    </div></div>
+                <div class="row"> <div class="col-md-4"> <label >Waga</label>
+                    <input disabled class="form-control" value="{{ pomiar.waga }}">
+                    </div></div>
+                <div class="row"> <div class="col-md-4"> <label >Wilgotność ECT</label>
+                    <input disabled class="form-control" value="{{ pomiar.wilgotnoscEct }}">
+                    </div></div>
+                <div class="row"> <div class="col-md-4"> <label >Temperatura ECT</label>
+                    <input disabled class="form-control" value="{{ pomiar.temperaturaEct }}">
+                    </div></div>
+                <div class="row"> <div class="col-md-4"> <label >Wilgotność mierzona</label>
+                    <input name="wilgotnosc" class="form-control" value="{{ pomiar.wilgotnoscMierzona }}">
+                    </div></div>
+                <div class="row"> <div class="col-md-4"> <label >Grubość Tektury</label>
+                    <input name="grubosc" class="form-control" value="{{ pomiar.gruboscTektury }}">
+                    </div></div>
+                <div class="row"> <div class="col-md-4"> <label >Numer Programu </label>
+                    <input name="numerProgramu" class="form-control" value="{{ pomiar.numerProgramu }}">
+                    </div></div>
+                <div class="row"> <div class="col-md-4"> <label >Numer Zlecenia</label>
+                    <input disabled class="form-control" value="{{ pomiar.numerZlecenia }}">
+                    </div></div>
+
+
+
+
+
+                <div class="col-md-12" style="margin-top: 2rem">
+                    <button class="btn btn-primary" type="submit">Edytuj</button>
+                </div>
+
+        </form>
+    </div>
+{% endblock %}

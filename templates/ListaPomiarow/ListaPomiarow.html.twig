@@ -1,0 +1,117 @@
+<div class="container-fluid" style="max-height: 85vh;overflow: scroll">
+
+    <table class="table table-bordered table-striped ">
+        <tr><th>Osoba</th>
+            <th>Tektura</th>
+            <th>Data</th>
+            <th>Numer Programu</th>
+            <th>Średnia ECT[N/m]</th>
+            <th>Numer Zlecenia</th>
+            <th>Pomiar 1</th>
+            <th>Pomiar 2</th>
+            <th>Pomiar 3</th>
+            <th>Pomiar 4</th>
+            <th>Pomiar 5</th>
+            <th>ECT MAX</th>
+            <th>ECT MIN</th>
+            <th>ECT<br/> Śred</th>
+            <th>Odchylenie Standardowe</th>
+            <th>Waga</th>
+            <th>Pokrycie 1</th>
+            <th>Fala 1</th>
+            <th>Pokrycie 2</th>
+            <th>Fala 2</th>
+            <th>Pokrycie 3</th>
+            <th>Temperatura</th>
+            <th>Wilgotność</th>
+            <th>Wilgotność Tektury</th>
+            <th>Grubość tektury</th>
+            {% if is_granted('ROLE_MODERATOR') %}
+                <th>Edycja</th>
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <th>Kasuj</th>
+            {% endif %}
+        </tr>
+        {% for pr in prod %}
+
+            {% if pr.tektura and pr.pokrycie1 and pr.pokrycie2  and pr.fala1  %}
+                <tr>
+            {% else %}
+                <tr class="bg-danger">
+            {% endif %}
+
+
+
+            <td>{{ pr.user.fullName }}</td>
+            {% if pr.tektura %}
+                <td>{{ pr.tektura.nazwa }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+
+            <td>{{ pr.DataWykonania|date("Y-m-d H:i")}}</td>
+            <td>{{ pr.getNumerProgramu() }}</td>
+            <td>{{pr.ectavg*10|round }}</td>
+            <td>{{ pr.NumerZlecenia }}</td>
+            <td>{{ pr.pomiar1 }}</td>
+            <td>{{ pr.pomiar2 }}</td>
+            <td>{{ pr.pomiar3 }}</td>
+            <td>{{ pr.pomiar4 }}</td>
+            <td>{{ pr.pomiar5 }}</td>
+            <td>{{ pr.ectmax }}</td>
+            <td>{{ pr.ectmin }}</td>
+            <td>{{ pr.ectavg }}</td>
+            <td>{{ pr.standarddeviation }}</td>
+            <td>{{ pr.waga }}</td>
+
+            {% if pr.pokrycie1 %}
+                <td>{{ pr.pokrycie1.nazwa }} {{ pr.pokrycie1.gramatura }}{{ pr.pokrycie1.producent }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if pr.fala1 %}
+                <td>{{ pr.fala1.nazwa }} {{ pr.fala1.gramatura }}{{ pr.fala1.producent }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if pr.pokrycie2 %}
+                <td>{{ pr.pokrycie2.nazwa }} {{ pr.pokrycie2.gramatura }}{{ pr.pokrycie2.producent }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if pr.fala2 %}
+                <td>{{ pr.fala2.nazwa }} {{ pr.fala2.gramatura }}{{ pr.fala2.producent }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+            {% if pr.pokrycie3 %}
+                <td>{{ pr.pokrycie3.nazwa }} {{ pr.pokrycie3.gramatura }}{{ pr.pokrycie3.producent }}</td>
+            {% else %}
+                <td></td>
+            {% endif %}
+
+            <td>{{ pr.temperaturaect }}</td>
+            <td>{{ pr.wilgotnoscect }}</td>
+            <td>{{ pr.wilgotnoscmierzona }}</td>
+            <td>{{ pr.grubosctektury }}</td>
+
+            <!-- <td> </td>
+              <td> </td>-->
+
+
+            {% if is_granted('ROLE_MODERATOR') %}
+                <td>
+                    <a href="{{ path('pomiary_edycja',{'id':pr.id}) }}" class="btn btn-primary">Edycja</a>
+                </td>
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <td>
+                    <a href="{{ path('pomiary_kasuj',{'id':pr.id}) }}" class="btn btn-danger">Kasuj</a>
+                </td>
+            {% endif %}
+            </tr>
+
+        {% endfor %}
+    </table>
+</div>

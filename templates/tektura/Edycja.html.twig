@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+        Edycja Tektury
+{% endblock %}
+{% block cont %}
+<div class="container">
+
+{%  if type == "new" %}
+        <h1>Stwórz nową tekturę </h1>
+{% elseif type == "edit" %}
+        <h1>Edytuj</h1>
+{% endif %}
+{{ form_start(form) }}
+<div class="row">
+        <div class="col-sm-8" id="some-custom-id">
+                {{ form_row(form.nazwa,{'attr':{class:'form-control'}}) }}
+                {{ form_row(form.gramatura,{'attr':{class:'form-control'}}) }}
+                {{ form_row(form.Zapisz,{'attr':{class:'btn btn-success'}}) }}
+                {{ form_row(form.id_post) }}
+
+
+        </div>
+</div>
+{{ form_end(form) }}
+
+</div>
+{% endblock %}

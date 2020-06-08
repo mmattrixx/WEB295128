@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edycja Tektura{% endblock %}
+
+{% block cont %}
+<div class="container">
+    <a href="{{ url('tekturaNowaTektura') }}" class="btn btn-success">Dodaj Nowy </a>
+    <table class="table table-bordered table-striped">
+        <tr><th>Nazwa</th> <th>Gramatura</th><th>Edycja</th></tr>
+    {% for pr in prod %}
+        <tr>
+            <td>{{ pr.nazwa }}</td>
+            <td> {{ pr.gramatura }}</td>
+            <td><form action="tektura/Edycja" method="post">
+                    <input type="hidden" name="id" value="{{ pr.id }}">
+                    <input type="submit" value="Edycja" class="btn btn-info">
+                </form>
+            </td>
+        </tr>
+
+    {% endfor %}
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+{% block cont %}
+
+
+    <div class="my-custom-class-for-errors">
+
+    </div>
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-sm-8">
+            {{ form_row(form.username,{'attr':{class:'form-control'}}) }}
+        </div>
+        <div class="col-sm-8" id="some-custom-id">
+            {{ form_row(form.email,{'attr':{class:'form-control'}}) }}
+            {{ form_row(form.plainPassword.first,{'attr':{class:'form-control'}}) }}
+            {{ form_row(form.plainPassword.second,{'attr':{class:'form-control'}}) }}
+            {{ form_row(form.fullName,{'attr':{class:'form-control'}}) }}
+            {{ form_row(form.Register,{'attr':{class:'btn btn-success'}}) }}
+
+            
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

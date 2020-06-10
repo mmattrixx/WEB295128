@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Tektura;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query;
 
 /**
  * @method Tektura|null find($id, $lockMode = null, $lockVersion = null)
@@ -24,6 +25,14 @@ class TekturaRepository extends ServiceEntityRepository
             ->orderBy('t.nazwa', 'ASC')
             ->getQuery()
             ->getResult()
+            ;
+    }
+    public function findAllSortedArr()
+    {
+        return $this->createQueryBuilder('t')
+            ->orderBy('t.nazwa', 'ASC')
+            ->getQuery()
+            ->getResult(Query::HYDRATE_ARRAY)
             ;
     }
     // /**

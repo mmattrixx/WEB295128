@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Papier;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query;
 
 /**
  * @method Papier|null find($id, $lockMode = null, $lockVersion = null)
@@ -26,6 +27,15 @@ class PapierRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getResult()
+            ;
+    }
+    public function findAllSortedArr()
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.nazwa', 'ASC')
+
+            ->getQuery()
+            ->getResult(Query::HYDRATE_ARRAY)
             ;
     }
     // /**

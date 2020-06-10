@@ -122,8 +122,6 @@ class ListaPomiarowController extends AbstractController
             16=>'Grubość Tektury'
 
         ];
-
-        //searchToken
         $submittedToken = $request->request->get('token');
 
         // 'delete-item' is the same value used in the template to generate the token
@@ -409,7 +407,7 @@ class ListaPomiarowController extends AbstractController
                             if ($pomiar5 > 0) {
                                 $odchylenieStd = +pow(($pomiar5 - $srednia), 2);
                             }
-                            $odchylenieStd=0;
+                            //$odchylenieStd=0;
                             if(($liczbaPomiarow - 1)!=0){
                                 $odchylenieStd = sqrt((1 / ($liczbaPomiarow - 1)) * $odchylenieStd);
                             }
@@ -417,35 +415,6 @@ class ListaPomiarowController extends AbstractController
 
 
                         }
-
-
-                        if ($pomiar1 == 0) {
-                            $pomiar1min = 100000;
-                        } else {
-                            $pomiar1min = $pomiar1;
-                        }
-                        if ($pomiar2 == 0) {
-                            $pomiar2min = 100000;
-                        } else {
-                            $pomiar2min = $pomiar2;
-                        }
-                        if ($pomiar3 == 0) {
-                            $pomiar3min = 100000;
-                        } else {
-                            $pomiar3min = $pomiar3;
-                        }
-                        if ($pomiar4 == 0) {
-                            $pomiar4min = 100000;
-                        } else {
-                            $pomiar4min = $pomiar4;
-                        }
-                        if ($pomiar5 == 0) {
-                            $pomiar5min = 100000;
-                        } else {
-                            $pomiar5min = $pomiar5;
-                        }
-
-
                         $user = $security->getUser();
                         $pomiar = new Pomiary();
                         $pomiar->setUser($user);

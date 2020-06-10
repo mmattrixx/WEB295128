@@ -6,6 +6,7 @@ use App\Entity\Tektura;
 use App\Form\TekturaType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
@@ -114,5 +115,32 @@ class TekturaController extends AbstractController
         } else {
             return $this->redirectToRoute('security_logout');
         }
+    }
+    /**
+     * @Route("/apiNewTek",name="nowytekturaapi")
+     */
+    public function NewTekApi(Request $request)
+    {
+        if ($this->security->isGranted('ROLE_MODERATOR')) {
+            $gramatura=$request->request->get('gramatura')==""?0:$request->request->get('gramatura');
+            $pap = new Tektura();
+            $pap->setGramatura($gramatura);
+            $pap->setNazwa($request->request->get('nazwa'));
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($pap);
+            $entityManager->flush();
+
+            $papiery = $this->getDoctrine()
+                ->getRepository(Tektura::class)
+                ->findAllSortedArr();
+
+            $content = "";
+            foreach ($papiery as $item) {
+                $content .= "<option value='{$item['id']}'> {$item['nazwa']} {$item['gramatura']}</option>";
+            }
+            return new Response(
+                $content
+            );
+        } else return $this->redirect('security_login');
     }
 }

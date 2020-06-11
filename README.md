@@ -1,26 +1,26 @@
-#ECT Biblioteka pomiarów
-##Odporność na zgniatanie kolumnowe – krawędziowe ECT
-######ECT to wskaźnik odporności tektury falistej na zgniatanie krawędziowe [inaczej także kolumnowe]. To drugi najważniejszy parametr określający z jakiej klasy produktem mamy do czynienia. ECT wyraża się w kN na 1 w kw. i w zależności od rynku, badanie ECT może mieć nieco inny przebieg. Norma PN-EN ISO 3037:2000 wskazuje jednak, że pomiar sprowadza się do umieszczenia tektury falistej między dwoma płytami zgniatającymi (tektura położona prostopadle do płyt zgniatających) aż do chwili, w której arkusz papieru ulega załamaniu. ECT wyraża w praktyce maksymalną siłę zgniatania, w jakiej nie dochodzi do trwałego odkształcenia – zniszczenia tektury.
-######Kluczowy wpływ na wartość ECT ma klasa papieru wykorzystana do produkcji. Można przyjąć za regułę, że niższą odporność na zgniatanie kolumnowe – krawędziowe wykazuje tektura falista, do której wykorzystano arkusze papieru z recyklingu (włókien obróbki wtórnej).
-##Cel Programu 
+# ECT Biblioteka pomiarów
+## Odporność na zgniatanie kolumnowe – krawędziowe ECT
+###### ECT to wskaźnik odporności tektury falistej na zgniatanie krawędziowe [inaczej także kolumnowe]. To drugi najważniejszy parametr określający z jakiej klasy produktem mamy do czynienia. ECT wyraża się w kN na 1 w kw. i w zależności od rynku, badanie ECT może mieć nieco inny przebieg. Norma PN-EN ISO 3037:2000 wskazuje jednak, że pomiar sprowadza się do umieszczenia tektury falistej między dwoma płytami zgniatającymi (tektura położona prostopadle do płyt zgniatających) aż do chwili, w której arkusz papieru ulega załamaniu. ECT wyraża w praktyce maksymalną siłę zgniatania, w jakiej nie dochodzi do trwałego odkształcenia – zniszczenia tektury.
+###### Kluczowy wpływ na wartość ECT ma klasa papieru wykorzystana do produkcji. Można przyjąć za regułę, że niższą odporność na zgniatanie kolumnowe – krawędziowe wykazuje tektura falista, do której wykorzystano arkusze papieru z recyklingu (włókien obróbki wtórnej).
+## Cel Programu 
     Program ma za zadanie przechowywać dane uzyskane z urządzenia do pomiarów ECT  
     oraz uzupełniać dane które nie są zawartę w  pomiarze 
-##Działanie programu 
+## Działanie programu 
      Osoba kontroli jakości wykonuje pomiar na urządzeniu które zwraca informacje w pliku *.inf
      Osoba kontrolująca wprowadza pomiar do systemu , uzupełnia brakujące dane tj. 
      wykorzystany typ tektury , rodzaj papieru na każdej fali i pokryciu ,numer zlecenia,grubość 
      i wilgotność tektury
      Wszystkie dane wprowadzane są dostępnie na stronie , domyślnie wyświetla się 200 ostatnich 
      na dany rok  
-##Uprawnienia
+## Uprawnienia
  Dostępne są 3 poziomy uprawnień programu które są dziedziczone 
    * ROLE_ADMIN - Dodawanie i edycja użytkowników , kasowanie pomiarów 
    * ROLE_MODERATOR - dodawanie pomiarów , edycja istniejących pomiaów , dodawanie tektury i papieru 
    * ROLE_ONLYSHOW -  podgląd wyszukiwanie obecnych pomiarów 
-##Dane
+## Dane
  Dane Tektur,Papierów oraz użytkowników można edytować 
   ale dla zachowania historii pomiarów nie można ich usuwać 
-##PHP  Symfony SQL Bootstrap JQuery
+## PHP  Symfony SQL Bootstrap JQuery
    Aplikacja napisana jest w framworku Symfony 5.0.2 który wymaga min PHP 7.2.5
    niektóre metody wykorzystane są z symfony 4.4 co może być powodem
     wyświetlania w profiler warningów o deprecjonowanych metodach 
@@ -30,7 +30,7 @@
    
    Aplikacja wykorzystuje silnik templatów Twig , cały wygląd oparty jest na Bootstrap w wersji 4 oraz 
    jQuery v3.4.1 
-##Opis Wymagań zaliczenia  WEBNSI2020
+## Opis Wymagań zaliczenia  WEBNSI2020
  * 500 lini kodu - w samym katalogu controlerów  [src/controller] znajduje się ponad 900 lini kodu 
  * Interfejs-Frontend
     * HTML5 
